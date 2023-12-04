@@ -3,13 +3,15 @@ const app = express()
 const mongoose = require('mongoose')
 const tasks = require("./routes/tasks")
 const dbConnect = require("./db/connect")
+
 // middleware
+app.use(express.static('./public'));
 app.use(express.json())
 
-// routes
-app.get('/tasks', (req, res) => {
-   res.send("Task manager app")
-})
+// // routes
+// app.get('/tasks', (req, res) => {
+//    res.send("Task manager app")
+// })
 
 app.use("/api/v1/tasks", tasks)
 

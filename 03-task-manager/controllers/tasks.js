@@ -2,12 +2,12 @@ const myTask = require("../models/Task");
 const { ObjectId } = require("mongoose").Types;
 
 const getAllTasks = async (req, res) => {
-  try {
+//   try {
     const allTasks = await myTask.find({});
     res.status(201).json({ allTasks });
-  } catch (error) {
-    res.status(500).send(error);
-  }
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
 };
 
 const createTask = async (req, res) => {
