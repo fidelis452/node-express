@@ -17,6 +17,7 @@ const createTask = async (req, res) => {
     console.log(task);
   } catch (error) {
     res.status(500).send({ message: error });
+    console.log(error);
   }
 };
 
@@ -72,6 +73,7 @@ const updateTask = async (req, res) => {
     res.status(200).json({ updateTask });
   } catch (error) {
     res.status(500).json({ error: "Internal server error!" });
+    console.log(error);
   }
 };
 

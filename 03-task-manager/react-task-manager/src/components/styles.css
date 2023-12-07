@@ -1,0 +1,101 @@
+.flex-container {
+   display: flex;
+   justify-content: center;
+   background-color: rgb(231, 243, 255);
+}
+
+.flex-container>div {
+   background-color: #f1f1f1;
+   width: 100px;
+   margin: 10px;
+   text-align: center;
+   line-height: 75px;
+   font-size: 30px;
+}
+
+input[type=text],
+select {
+   width: 100%;
+   padding: 12px 20px;
+   margin: 8px 0;
+   display: inline-block;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   box-sizing: border-box;
+}
+
+input[type=submit] {
+   width: 40%;
+   background-color: #4CAF50;
+   color: white;
+   padding: 14px 20px;
+   margin: 8px 0;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+}
+
+input[type=submit]:hover {
+   background-color: #45a049;
+}
+
+.card {
+   display: flex;
+   flex-direction: row;
+   margin: 1rem auto;
+   padding: 1rem;
+   border: none;
+   text-align: justify;
+   font-size: 15px;
+   font-weight: bold;
+   color: rgb(79, 79, 79);
+}
+
+.card .card-section{
+   display: flex;
+   flex-direction: row;
+    width: 80%;
+}
+
+.card .card-section .completed {
+   width: 10%;
+}
+
+.card .card-section .complete-task{
+   text-decoration: line-through;
+   width: 70%;
+}
+
+.card .card-section .incomplete-task {
+   width: 70%;
+}
+
+.card .edit {
+   width: 10%;
+}
+
+.card .edit > button{
+   border: none !important;
+   background-color: transparent;
+}
+.card .delete {
+   width: 10%;
+}
+
+.card .delete >button {
+   border: none !important;
+   background-color: transparent;
+}
+
+/* edit  */
+
+.editTask {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   width: 400px;
+}
+
+.editTask > label {
+   width: 40%;
+}
