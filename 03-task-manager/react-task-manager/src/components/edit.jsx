@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import "./styles.css";
-import { useLocation, useParams } from "react-router-dom";
+import {
+  Navigate,
+  redirect,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import axios from "axios";
 
 export default function EditTask() {
+  const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
 
@@ -18,7 +25,8 @@ export default function EditTask() {
   });
 
   const handleChange = (e) => {
-    let value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    let value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
     let name = e.target.name;
 
     setTask((prevState) => ({
@@ -27,23 +35,28 @@ export default function EditTask() {
     }));
   };
 
-   console.log(task);
+  console.log(task);
 
   const handleSubmit = async (e) => {
      e.preventDefault();
-     try {
-      const response = await axios.patch(`api/v1/tasks/${task._id}`, {
-         name: task.name,
-         completed: task.completed
-      });
+    try {
+      const response = await axios.patch(
+        `http://localhost:4000/api/v1/tasks/${task._id}`,
+        {
+          name: task.name,
+          completed: task.completed,
+        }
+      );
       console.log(JSON.stringify(response.data));
+      console.log("Submitted Task:", task);
+      navigate("/", {redirect: true})
     } catch (error) {
       console.log(error);
-     }
-     
+    }
+
     // Add your logic to submit the task data
-    console.log("Submitted Task:", task);
   };
+
 
   return (
     <div className="flex-container">
@@ -68,6 +81,7 @@ export default function EditTask() {
         <div className="editTask">
           <label htmlFor="status">Completed</label>
           <input
+            id="status"
             type="checkbox"
             name="completed"
             checked={task.completed}
@@ -75,7 +89,9 @@ export default function EditTask() {
           />
         </div>
 
-        <input type="submit" value="Submit" />
+        <input className="submit-button" type="submit" value="Submit" />
+        {/* Submit
+        </button> */}
       </form>
     </div>
   );

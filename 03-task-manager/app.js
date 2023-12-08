@@ -5,15 +5,17 @@ const tasks = require("./routes/tasks")
 const dbConnect = require("./db/connect")
 const cors = require('cors')
 // middleware
-app.use(cors())
+// app.use(cors())
+app.options("*", cors());
 app.use(express.static('./public'));
 app.use(express.json())
+
 // routes
 app.get('/tasks', (req, res) => {
    res.send("Task manager app")
 })
 
-app.use("/api/v1/tasks", tasks)
+app.use("/api/v1/tasks", tasks, cors())
 
 const port = 4000;
 

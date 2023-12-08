@@ -6,7 +6,7 @@ import "./styles.css";
 export default function Tasks() {
   const [name, setName] = useState("");
 
-    const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(true);
 
   console.log({ name });
 
@@ -15,16 +15,23 @@ export default function Tasks() {
   const [activeTask, setActiveTask] = useState();
 
   const navigate = useNavigate();
+
   useEffect(() => {
-    axios.get("/api/v1/tasks").then((response) => {
-      setTasks(response.data.allTasks);
-    });
+    getTask();
   }, []);
 
+  const getTask = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/api/v1/tasks");
+      setTasks(response.data.allTasks);
+    } catch (error) {
+      console.error("Error fetching items:", error);
+    }
+  };
   // console.log(tasks);
   const handleSubmit = async (e) => {
     try {
-      const response = await axios.post("/api/v1/tasks", {
+      const response = await axios.post("http://localhost:4000/api/v1/tasks", {
         name: name,
       });
       console.log(JSON.stringify(response.data));
@@ -34,11 +41,24 @@ export default function Tasks() {
   };
 
   const handleEdit = (taskId) => {
-
     const task = tasks.find((item) => item._id === taskId);
 
-    navigate(`/edit/${taskId}`, { state: { id: task._id, name: task.name, completed: task.completed} });
+    navigate(`/edit/${taskId}`, {
+      state: { id: task._id, name: task.name, completed: task.completed },
+    });
   };
+
+  const handleDelete = async ( taskID) => {
+    try {
+      const deleteTask = await axios.delete(
+        `http://localhost:4000/api/v1/tasks/${taskID}`
+      );
+
+      getTask();
+
+      console.log("Task deleted", deleteTask);
+    } catch (error) {}
+  }
 
   return (
     <div class="flex-container">
@@ -60,7 +80,11 @@ export default function Tasks() {
               return (
                 <>
                   <div className="completed">
-                    <input type="checkbox" value={item.completed} defaultChecked={true} />
+                    <input
+                      type="checkbox"
+                      value={item.completed}
+                      defaultChecked={true}
+                    />
                   </div>
                   <div className="complete-task">{item.name}</div>
                 </>
@@ -84,7 +108,7 @@ export default function Tasks() {
             <div className="card" key={index}>
               <div className="card-section">{completed()}</div>
               <div className="edit">
-                <button onClick={() => handleEdit( item._id)}>
+                <button onClick={() => handleEdit(item._id)}>
                   <img
                     width="13"
                     height="13"
@@ -94,7 +118,7 @@ export default function Tasks() {
                 </button>
               </div>
               <div className="delete">
-                <button>
+                <button onClick={() => handleDelete(item._id)}>
                   <img
                     width="13"
                     height="13"
